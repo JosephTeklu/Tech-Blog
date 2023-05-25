@@ -17,7 +17,7 @@ Comments.init(
     },
     blog_id: {
       type: DataTypes.INTEGER,
-      allowNull: true, //////////// switch back or maybe dont's need
+      allowNull: false, //////////// switch back or maybe dont's need
       references: {
         model: "blog",
         key: "id",
