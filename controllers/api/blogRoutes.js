@@ -30,6 +30,8 @@ router.post("/", async (req, res) => {
       return;
     }
 
+    res.render();
+
     // create the new blog based on the request and return json
     const newBlog = await Blog.create(req.body);
     res.status(200).json(newBlog);
@@ -37,5 +39,7 @@ router.post("/", async (req, res) => {
     res.status(400).json(error);
   }
 });
+
+// PUT
 
 module.exports = router;

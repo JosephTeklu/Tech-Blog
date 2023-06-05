@@ -19,11 +19,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-// check user's credentials to login user %
+// user logs in
 router.post("/login", async (req, res) => {
   try {
+    // find the user whose email matches the one from the request
     const userData = await User.findOne({ where: { email: req.body.email } });
-
+    // if the email does not exist send error message and return
     if (!userData) {
       res
         .status(400)
@@ -31,8 +32,9 @@ router.post("/login", async (req, res) => {
       return;
     }
 
+    // if the given email checks out, not check the password for validation
     const validPassword = await userData.checkPassword(req.body.password);
-
+    // if the password is falsy send error message and return
     if (!validPassword) {
       res
         .status(400)
@@ -40,14 +42,14 @@ router.post("/login", async (req, res) => {
       return;
     }
 
+    // log in the user, save their session id, and send message
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-
       res.json({ user: userData, message: "You are now logged in!" });
     });
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (error) {
+    res.status(400).json(error);
   }
 });
 
@@ -60,6 +62,15 @@ router.post("/logout", (req, res) => {
   } else {
     res.status(404).end();
   }
+});
+
+// checks if the user is logged in
+router.get("/logincheck", (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+    return true;
+  }
+  return false;
 });
 
 module.exports = router;

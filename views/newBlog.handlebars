@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Tech Blog Dashboard</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>Welcome to the Tech Blog Dashboard!</h1>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Articles</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">About</a></li>
+        <!-- Add more navigation links as needed -->
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+      <section>
+        <h2>Latest Articles</h2>
+        {{#each articles}}
+          <article>
+            <h3>{{title}}</h3>
+            <p>{{content}}</p>
+          </article>
+        {{/each}}
+        <!-- Add more articles as needed -->
+      </section>
+
+      <section>
+        <h2>Add New Blog Entry</h2>
+        <form>
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" required /><br /><br />
+
+          <label for="content">Content:</label><br />
+          <textarea
+            id="content"
+            name="content"
+            rows="4"
+            cols="50"
+            required
+          ></textarea><br /><br />
+
+          <input type="submit" value="Add Blog Entry" />
+        </form>
+      </section>
+
+      <section>
+        <h2>Categories</h2>
+        <ul>
+          {{#each categories}}
+            <li>{{this}}</li>
+          {{/each}}
+          <!-- Add more categories as needed -->
+        </ul>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2023 Tech Blog. All rights reserved.</p>
+    </footer>
+
+    <!-- Handlebars Library -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+    ></script>
+
+    <!-- Handlebars Template -->
+    <script id="blog-template" type="text/x-handlebars-template">
+      <h3>{{title}}</h3> <p>{{content}}</p>
+    </script>
+
+    <!-- Handlebars Script -->
+    <script>
+      // Compile the Handlebars template var blogTemplate =
+      Handlebars.compile(document.getElementById("blog-template").innerHTML); //
+      Data for rendering the articles var articlesData = { articles: [ { title:
+      "Article Title 1", content: "Article content goes here..." }, { title:
+      "Article Title 2", content: "Article content goes here..." } // Add more
+      articles as needed ], categories: [ "Category 1", "Category 2", "Category
+      3" // Add more categories as needed ] }; // Render the articles using the
+      template and data var articlesHTML = blogTemplate(articlesData);
+      document.querySelector("section:nth-child(1)").innerHTML += articlesHTML;
+    </script>
+  </body>
+</html>
